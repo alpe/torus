@@ -21,18 +21,26 @@ type mockBlockRPC struct {
 	data []byte
 }
 
-func (m *mockBlockRPC) Block(ctx context.Context, ref torus.BlockRef) ([]byte, error) {
-	return m.data, nil
+func (m *mockBlockRPC) block() []byte {
+	data := make([]byte, len(m.data))
+	copy(data, m.data)
+	return data
 }
+
+func (m *mockBlockRPC) Block(ctx context.Context, ref torus.BlockRef) ([]byte, error) {
+	return m.block(), nil
+}
+
 func (m *mockBlockRPC) PutBlock(ctx context.Context, ref torus.BlockRef, data []byte) error {
 	if ref.INode != 2 && ref.Index != 3 {
 		return errors.New("mismatch")
 	}
-	if bytes.Equal(m.data, data) {
+	if bytes.Equal(m.block(), data) {
 		return nil
 	}
 	return errors.New("mismatch")
 }
+
 func (m *mockBlockRPC) RebalanceCheck(ctx context.Context, refs []torus.BlockRef) ([]bool, error) {
 	out := make([]bool, len(refs))
 	for i, x := range refs {
@@ -47,7 +55,7 @@ func (m *mockBlockRPC) WriteBuf(ctx context.Context, ref torus.BlockRef) ([]byte
 	if ref.INode != 2 && ref.Index != 3 {
 		return nil, errors.New("mismatch")
 	}
-	return m.data, nil
+	return m.block(), nil
 }
 
 func (m *mockBlockRPC) BlockSize() uint64 {
