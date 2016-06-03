@@ -8,7 +8,8 @@ Releases are available at http://github.com/coreos/torus/releases
 
 #### Build from master
 
-For builds, Torus assumes a Go installation and a correctly configured [GOPATH](https://golang.org/doc/code.html#Organization). Simply checkout the repo and use the Makefile to build.
+For builds, Torus assumes a Go installation and a correctly configured [GOPATH](https://golang.org/doc/code.html#Organization). Go dependencies are managed via [glide](https://github.com/Masterminds/glide).
+Simply checkout the repo and use the Makefile to build.
 
 ```
 git clone git@github.com:coreos/torus $GOPATH/src/github.com/coreos/torus
