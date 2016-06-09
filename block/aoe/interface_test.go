@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestInterfaceClose(t *testing.T) {
+func XXXTestInterfaceClose(t *testing.T) {
 	ai, err := NewInterface("lo")
 	if err != nil {
 		if err == syscall.EPERM {
